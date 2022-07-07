@@ -10,16 +10,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.sda.arppl4.spring_rental.model.Car;
 import pl.sda.arppl4.spring_rental.repository.CarRepository;
 
+import java.util.List;
+
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CarService {
-    private final CarService carService;
+    private final CarRepository carRepository;
 
-    @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addCar(@RequestBody Car car) {
-        log.info("Wywołano dodanie samochodu: " + car);
-        carService.addCar(car);
+
+    public List<Car> getAllCars() {
+        return carRepository.findAll();
+    }
+
+
+    public void addProduct(Car car) {
+        carRepository.save(car);
+
+
     }
 }
+
