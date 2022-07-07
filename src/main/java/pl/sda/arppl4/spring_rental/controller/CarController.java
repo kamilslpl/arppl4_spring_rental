@@ -25,7 +25,6 @@ public class CarController {
     public void addCar(@RequestBody Car car) {
         log.info("Wywołano dodanie samochodu: " + car);
         carService.addProduct(car);
-
     }
 
     @GetMapping("/list")
@@ -47,6 +46,7 @@ public class CarController {
         log.info("Wywołano aktualizację samochodu: " + car);
         carService.updateCar(car);
     }
+
     @ApiOperation(value = "znajdzStudenta", notes = "Ten endpoint pozwala na znajdowanie studentów po ich identyfikatorach w bazie danych.")
     @GetMapping("/{identifier}")
     public Car findCar( Long carId) {

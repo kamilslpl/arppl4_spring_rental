@@ -1,13 +1,10 @@
 package pl.sda.arppl4.spring_rental.model;
 
 
-import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,18 +21,16 @@ public class CarRental {
 
     private String imie;
     private String nazwisko;
+    @CreationTimestamp
     private LocalDateTime czasWynajmu;
     private LocalDateTime czasZwrotu;
-    private int cenaNajmu;
+    private Double cenaNajmu;
 
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Car car;
 
-    public CarRental(Long id, String imie, String nazwisko, LocalDateTime czasWynajmu, int cenaNajmu, Car car) {
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.czasWynajmu = czasWynajmu;
-        this.cenaNajmu = cenaNajmu;
-        this.car = car;
-    }
+
 }
+

@@ -4,6 +4,7 @@ package pl.sda.arppl4.spring_rental.model;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
@@ -34,6 +35,9 @@ public class Car {
     private CarSkrzynia skrzynia;
     private Double pojemnoscSilnika;
 
-    @OneToMany
-    private Set<CarRental> rents;
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
+    private Set<CarRental> carRentals;
+
+
 }
