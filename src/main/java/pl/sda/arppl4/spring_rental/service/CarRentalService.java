@@ -3,13 +3,15 @@ package pl.sda.arppl4.spring_rental.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import pl.sda.arppl4.spring_rental.exception.CarNotAvailableException;
 import pl.sda.arppl4.spring_rental.model.Car;
 import pl.sda.arppl4.spring_rental.model.CarRental;
+import pl.sda.arppl4.spring_rental.model.dto.CarDTO;
+import pl.sda.arppl4.spring_rental.model.dto.RentCarRequest;
 import pl.sda.arppl4.spring_rental.repository.CarRentalRepository;
 import pl.sda.arppl4.spring_rental.repository.CarRepository;
 
-import java.time.LocalDateTime;
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,13 +23,13 @@ public class CarRentalService {
         private final CarRentalRepository carRentalRepository;
         private final CarRepository carRepository;
 
-    public List<Car> getAvailableCars() {
+    public List<CarDTO> getAvailableCars() {
         List<Car> carList = carRepository.findAll();
 
-        List<Car> cars = new ArrayList<>();
+        List<CarDTO> cars = new ArrayList<>();
         for (Car car : carList) {
             if(!isRented(car)){
-                cars.add(car);
+                cars.add(car.mapToCarDTO());
             }
         }
         return cars;
@@ -41,8 +43,9 @@ public class CarRentalService {
         }
         return false;
     }
-
-    public void rentCar(Long carId, CarRental parametry){
+// do innego sprawdzenia
+/*
+    public void rentACar(Long carId, CarRental parametry){
         Optional<CarRental> optionalCarRental = carRentalRepository.findById(carId);
         if(optionalCarRental.isPresent()){
             CarRental rentedCar = optionalCarRental.get();
@@ -51,7 +54,30 @@ public class CarRentalService {
             }
         }
     }
+*/
 
+    public void rentCar(Long carId, RentCarRequest request) {
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        if(optionalCar.isPresent()){
+            Car car = optionalCar.get();
+            if(!isRented(car)){
+                CarRental carRental = mapRentCarRequestToCarRental(request);
+                carRental.setCar(car);
+                carRentalRepository.save(carRental);
+                return;
+            }
+            throw new CarNotAvailableException("Car not available, id: "+ carId);
+        }
+        throw new EntityNotFoundException("Unable to find car with id: "+ carId);
+    }
+
+    private CarRental mapRentCarRequestToCarRental(RentCarRequest request){
+        return new CarRental(
+                request.getNameOfTheClient(),
+                request.getSurnameOfTheClient(),
+                request.getHourlyPrice());
+
+    }
 
 }
 

@@ -1,6 +1,7 @@
 package pl.sda.arppl4.spring_rental.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -29,8 +30,19 @@ public class CarRental {
     @ManyToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonBackReference
     private Car car;
 
+    public CarRental(String imie, String nazwisko, Double cenaNajmu, Car car) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.cenaNajmu = cenaNajmu;
+        this.car = car;
+    }
 
+    public CarRental(String nameOfTheClient, String surnameOfTheClient, Double hourlyPrice) {
+
+    }
 }
+
 

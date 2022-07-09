@@ -2,12 +2,12 @@ package pl.sda.arppl4.spring_rental.controller;
 
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.arppl4.spring_rental.model.Car;
+import pl.sda.arppl4.spring_rental.model.dto.CarDTO;
 import pl.sda.arppl4.spring_rental.service.CarService;
 
 import java.util.List;
@@ -28,11 +28,19 @@ public class CarController {
     }
 
     @GetMapping("/list")
+    public List<CarDTO> getAllCarss() {
+        log.info("Wywołano listę samochodow.");
+        List<CarDTO> list = carService.findAll();
+        return list;
+    }
+
+/*    @GetMapping("/list")
     public List<Car> getAllCarss() {
         log.info("Wywołano listę samochodow.");
         List<Car> list = carService.getAllCars();
         return list;
     }
+    */
 
     @DeleteMapping("/delete/{identifier}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
