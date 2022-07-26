@@ -12,37 +12,31 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-//@ApiModel(value = "CarRental", description = "Encja reprezentująca instancjy samochod w bazie danych.")
-
 public class CarRental {
-    @Id // primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-
+    ///
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    ///
 
-    private String imie;
-    private String nazwisko;
+    private String clientName;
+    private String clientSurname;
+
     @CreationTimestamp
-    private LocalDateTime czasWynajmu;
-    private LocalDateTime czasZwrotu;
-    private Double cenaNajmu;
+    private LocalDateTime rentDateTime;
+    private LocalDateTime returnDateTime;
 
-    @ManyToOne
+    private Double price;
+
+    @ManyToOne()
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonBackReference
     private Car car;
 
-    public CarRental(String imie, String nazwisko, Double cenaNajmu, Car car) {
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.cenaNajmu = cenaNajmu;
-        this.car = car;
-    }
-
-    public CarRental(String nameOfTheClient, String surnameOfTheClient, Double hourlyPrice) {
-
+    public CarRental(String clientName, String clientSurname, Double price) {
+        this.clientName = clientName;
+        this.clientSurname = clientSurname;
+        this.price = price;
     }
 }
-
-

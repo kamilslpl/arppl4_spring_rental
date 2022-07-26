@@ -3,8 +3,8 @@ package pl.sda.arppl4.spring_rental.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.sda.arppl4.spring_rental.model.CarNadwozie;
-import pl.sda.arppl4.spring_rental.model.CarSkrzynia;
+import pl.sda.arppl4.spring_rental.model.CarBodyType;
+import pl.sda.arppl4.spring_rental.model.CarGearBox;
 
 import java.time.LocalDate;
 
@@ -16,8 +16,8 @@ public class CarDTO {
     private String name;
     private String make;
     private LocalDate productionDate;
-    private CarNadwozie bodyType;
+    private CarBodyType bodyType;
     private Integer seats;
-    private CarSkrzynia carGearBox;
+    private CarGearBox carGearBox;
     private Double engineCapacity;
 }

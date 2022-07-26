@@ -1,5 +1,5 @@
 package pl.sda.arppl4.spring_rental.model;
 
-public enum CarSkrzynia {
+public enum CarGearBox {
     MANUAL, AUTO;
 }

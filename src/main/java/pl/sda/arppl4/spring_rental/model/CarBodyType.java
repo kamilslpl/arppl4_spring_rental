@@ -1,5 +1,5 @@
 package pl.sda.arppl4.spring_rental.model;
 
-public enum CarNadwozie {
+public enum CarBodyType {
     SEDAN, CABRIO, SUV;
 }
